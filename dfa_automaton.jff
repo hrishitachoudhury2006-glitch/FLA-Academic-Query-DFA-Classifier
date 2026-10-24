@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created for SRM IST - CLA 2 - Formal Language & Automata (FLA) -->
+<structure>
+	<type>fa</type>
+	<automaton>
+		<!-- The list of states -->
+		<state id="0" name="q0">
+			<x>100.0</x>
+			<y>250.0</y>
+			<initial/>
+		</state>
+		<state id="1" name="qS">
+			<x>280.0</x>
+			<y>100.0</y>
+		</state>
+		<state id="2" name="qA">
+			<x>280.0</x>
+			<y>200.0</y>
+		</state>
+		<state id="3" name="qP">
+			<x>280.0</x>
+			<y>300.0</y>
+		</state>
+		<state id="4" name="qR">
+			<x>280.0</x>
+			<y>400.0</y>
+		</state>
+		<state id="5" name="q_finS">
+			<x>500.0</x>
+			<y>100.0</y>
+			<final/>
+		</state>
+		<state id="6" name="q_finA">
+			<x>500.0</x>
+			<y>200.0</y>
+			<final/>
+		</state>
+		<state id="7" name="q_finP">
+			<x>500.0</x>
+			<y>300.0</y>
+			<final/>
+		</state>
+		<state id="8" name="q_finR">
+			<x>500.0</x>
+			<y>400.0</y>
+			<final/>
+		</state>
+		<state id="9" name="q_trap">
+			<x>400.0</x>
+			<y>550.0</y>
+		</state>
+
+		<!-- The list of transitions -->
+		<!-- From q0 -->
+		<transition>
+			<from>0</from>
+			<to>0</to>
+			<read>x</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>1</to>
+			<read>s</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>3</to>
+			<read>p</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>4</to>
+			<read>r</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>9</to>
+			<read>#</read>
+		</transition>
+
+		<!-- From qS -->
+		<transition>
+			<from>1</from>
+			<to>1</to>
+			<read>x</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>1</to>
+			<read>s</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>5</to>
+			<read>#</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>9</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>9</to>
+			<read>p</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>9</to>
+			<read>r</read>
+		</transition>
+
+		<!-- From qA -->
+		<transition>
+			<from>2</from>
+			<to>2</to>
+			<read>x</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>2</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>6</to>
+			<read>#</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>9</to>
+			<read>s</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>9</to>
+			<read>p</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>9</to>
+			<read>r</read>
+		</transition>
+
+		<!-- From qP -->
+		<transition>
+			<from>3</from>
+			<to>3</to>
+			<read>x</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>3</to>
+			<read>p</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>7</to>
+			<read>#</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>9</to>
+			<read>s</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>9</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>9</to>
+			<read>r</read>
+		</transition>
+
+		<!-- From qR -->
+		<transition>
+			<from>4</from>
+			<to>4</to>
+			<read>x</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>4</to>
+			<read>r</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>8</to>
+			<read>#</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>9</to>
+			<read>s</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>9</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>9</to>
+			<read>p</read>
+		</transition>
+
+		<!-- From q_trap -->
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>x</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>s</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>p</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>r</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>9</to>
+			<read>#</read>
+		</transition>
+	</automaton>
+</structure>

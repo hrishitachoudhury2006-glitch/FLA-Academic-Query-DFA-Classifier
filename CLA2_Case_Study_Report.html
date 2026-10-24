@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SRM IST CLA-2 Report - Team 18</title>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; margin: 40px auto; max-width: 900px; color: #2c3e50; padding: 0 20px; }
+  .header { text-align: center; border-bottom: 2px solid #1a365d; padding-bottom: 15px; margin-bottom: 30px; }
+  .header h1 { margin: 0; color: #1a365d; font-size: 22px; }
+  .header h2 { margin: 5px 0; color: #4a5568; font-size: 15px; }
+  .header h3 { margin: 5px 0; color: #d69e2e; font-size: 14px; font-weight: bold; }
+  .title-box { background: #ebf8ff; border-left: 5px solid #3182ce; padding: 15px; margin: 20px 0; }
+  .title-box h2 { margin: 0; color: #2b6cb0; font-size: 18px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #cbd5e0; padding: 8px 12px; text-align: left; font-size: 14px; }
+  th { background: #2b6cb0; color: white; }
+  tr:nth-child(even) { background: #f7fafc; }
+  .figure-box { text-align: center; margin: 25px 0; }
+  .figure-box img { max-width: 100%; height: auto; border: 1px solid #e2e8f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+  .caption { font-size: 13px; font-style: italic; color: #718096; margin-top: 8px; }
+  h2 { color: #1a365d; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-top: 30px; }
+  ul { padding-left: 20px; }
+  .metric-badge { display: inline-block; background: #e6fffa; border: 1px solid #38b2ac; color: #234e52; padding: 4px 10px; border-radius: 4px; font-weight: bold; margin: 5px 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SRM INSTITUTE OF SCIENCE AND TECHNOLOGY</h1>
+  <h2>TIRUCHIRAPPALLI CAMPUS | DEPARTMENT OF INFORMATION TECHNOLOGY</h2>
+  <h3>COURSE: 21ITC203J - FORMAL LANGUAGE AND AUTOMATA (FLA) | CLA-2</h3>
+</div>
+
+<div class="title-box">
+  <h2>Design and Implementation of a Deterministic Finite Automaton (DFA) for Academic Query Lexical Analysis and Intent Classification with Downstream SLM Guidance Dispatch</h2>
+  <p style="margin: 8px 0 0 0; font-size: 14px;"><strong>Team 18</strong> | Sathyabhama P S (RA2411008050023) & Hrishita Choudhury (RA2411008050013) | Faculty: Dr. P. Nagaraj | <strong>SDG 4: Quality Education</strong></p>
+</div>
+
+<h2>1. Abstract</h2>
+<p>Natural Language Processing systems and automated chatbots deployed in academic institutions frequently suffer from high inference latency, high compute expenses, and vulnerability to adversarial prompt injection when processing unconstrained student inquiries. This case study designs and implements a formal Deterministic Finite Automaton (DFA) to perform real-time lexical analysis and intent classification on incoming student queries. The automaton evaluates tokenized input strings across four primary academic languages: Study (L_S), Attendance (L_A), Performance (L_P), and Resources (L_R), directing unrecognized or adversarial inputs into an absorbing dead/trap state (q_trap). Verified final states (q in F) dynamically trigger context-injected guidance from a downstream Small Language Model (SLM). Empirical evaluation on a benchmark corpus of 100 queries demonstrates an average DFA transition latency of 0.0278 ms per query (O(n) linear time), reducing LLM compute overhead by 99.98% on out-of-domain queries while providing a deterministic security barrier.</p>
+
+<h2>2. System Architecture</h2>
+<div class="figure-box">
+  <img src="system_architecture.png" alt="System Architecture">
+  <div class="caption">Figure 1: Two-Stage Hybrid System Architecture (DFA Front-End + SLM Back-End)</div>
+</div>
+
+<h2>3. Formal Computational Model (5-Tuple Definition)</h2>
+<p><strong>M = (Q, &Sigma;, &delta;, q0, F)</strong></p>
+<ul>
+  <li><strong>Input Alphabet (&Sigma;):</strong> &Sigma; = {s, a, p, r, x, #} (s: Study, a: Attendance, p: Performance, r: Resources, x: Filler/Neutral, #: End Marker)</li>
+  <li><strong>States (Q):</strong> Q = {q0, qS, qA, qP, qR, q_finS, q_finA, q_finP, q_finR, q_trap}</li>
+  <li><strong>Initial State:</strong> q0</li>
+  <li><strong>Final States (F):</strong> F = {q_finS, q_finA, q_finP, q_finR}</li>
+  <li><strong>Transition Function (&delta;):</strong> &delta; : Q &times; &Sigma; &rarr; Q</li>
+</ul>
+
+<div class="figure-box">
+  <img src="dfa_state_diagram.png" alt="DFA State Diagram">
+  <div class="caption">Figure 2: Formal State Transition Diagram (Also Modeled in JFLAP: dfa_automaton.jff)</div>
+</div>
+
+<h2>4. State Transition Table</h2>
+<table>
+  <tr><th>State</th><th>x (Filler)</th><th>s (Study)</th><th>a (Attend)</th><th>p (Perf)</th><th>r (Resource)</th><th># (EOF)</th></tr>
+  <tr><td>&rarr; q0</td><td>q0</td><td>qS</td><td>qA</td><td>qP</td><td>qR</td><td>q_trap</td></tr>
+  <tr><td>qS</td><td>qS</td><td>qS</td><td>q_trap</td><td>q_trap</td><td>q_trap</td><td>*q_finS</td></tr>
+  <tr><td>qA</td><td>qA</td><td>q_trap</td><td>qA</td><td>q_trap</td><td>q_trap</td><td>*q_finA</td></tr>
+  <tr><td>qP</td><td>qP</td><td>q_trap</td><td>q_trap</td><td>qP</td><td>q_trap</td><td>*q_finP</td></tr>
+  <tr><td>qR</td><td>qR</td><td>q_trap</td><td>q_trap</td><td>q_trap</td><td>qR</td><td>*q_finR</td></tr>
+  <tr><td>q_trap</td><td>q_trap</td><td>q_trap</td><td>q_trap</td><td>q_trap</td><td>q_trap</td><td>q_trap</td></tr>
+</table>
+
+<h2>5. Empirical Validation & Confusion Matrix</h2>
+<p><span class="metric-badge">Accuracy: 82.00%</span> <span class="metric-badge">Adversarial Rejection: 95.00%</span> <span class="metric-badge">DFA Latency: 0.0278 ms</span></p>
+<div class="figure-box">
+  <img src="confusion_matrix.png" alt="Confusion Matrix" style="max-width: 70%;">
+  <div class="caption">Figure 3: Confusion Matrix Across 100 Benchmark Queries</div>
+</div>
+
+<div class="figure-box">
+  <img src="latency_comparison.png" alt="Latency Comparison" style="max-width: 70%;">
+  <div class="caption">Figure 4: Execution Latency Comparison: Traditional LLM vs. Proposed DFA Front-End (8,992x Speedup)</div>
+</div>
+
+<h2>6. Conclusion & Practical Implications</h2>
+<p>Positioning a Deterministic Finite Automaton as a high-speed lexical parser solves the latency and security vulnerabilities of generative AI in campus advisory platforms, advancing <strong>SDG 4 (Quality Education)</strong>.</p>
+
+</body>
+</html>
